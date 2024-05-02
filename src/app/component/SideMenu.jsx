@@ -15,14 +15,33 @@ function SideMenu() {
   const [isDropDown, setIsDropDown] = useState(false);
   // TODO: change uploadStatus to progress
   // const [uploadStatus, setUploadStatus] = useState([]);
-  const [fileName, setFileName] = useState([]);
+  const [fileName, setFileName] = useState();
   const [folderName, setFolderName] = useState("");
   const [folderToggle, setFolderToggle] = useState(false);
 
   // Add new file
   const uploadFile = (e) => {
     const files = e.target.files || [];
-    console.log(files);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const fileContent = event.target.result;
+        if (file.type.startsWith("image/")) {
+          setFileName(fileContent);
+        } else if (file.type.startsWith("video/")) {
+          setFileName(URL.createObjectURL(file));
+        } else if (file.type.startsWith("audio/")) {
+          setFileName(URL.createObjectURL(file));
+        }
+      };
+      if (file.type.startsWith("image/")) {
+        reader.readAsDataURL(file);
+      } else {
+        reader.readAsArrayBuffer(file);
+      }
+    }
   };
 
   // Add new folder
@@ -30,6 +49,9 @@ function SideMenu() {
 
   return (
     <section className="relative h-[90vh] w-16 space-y-4 duration-500 tablet:w-60">
+      <img src={fileName} alt="" />
+      <video src={fileName} controls={true}></video>
+      <audio src={fileName} controls={true}></audio>
       <button
         onClick={() => setIsDropDown(true)}
         className="mt-1 flex w-fit items-center justify-center space-x-2
