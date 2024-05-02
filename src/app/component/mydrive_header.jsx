@@ -1,6 +1,5 @@
 import React from "react";
 import { AiFillCaretDown } from "react-icons/ai";
-import { BsArrowLeftCircle } from "react-icons/bs";
 
 function MyDriveHeader({ headerName }) {
   return (
