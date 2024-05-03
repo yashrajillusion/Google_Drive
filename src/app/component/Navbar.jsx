@@ -15,10 +15,11 @@ function Navbar() {
 }
 
 function FolderNavbarComp({ folderTree, pathname }) {
-  if (!folderTree || !folderTree.isFolder) return;
-  const fileList = [...folderTree.children.values()];
   const [isExpand, setExpand] = useState(false);
   const router = useRouter();
+  
+  const fileList = [...folderTree.children.values()];
+  if (!folderTree || !folderTree.isFolder) return;
 
   return (
     <nav className="space-y-0.5  pr-2 ml-3">
