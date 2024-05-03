@@ -1,23 +1,18 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
-// import DropDown from "./addBtnComponents/DropDown";
-// import AddFolder from "./addBtnComponents/AddFolder";
 import Navbar from "./Navbar";
 import DropDown from "./button/DropDown";
 import AddFolder from "./button/AddFolder";
-// import fileUpload from "@/API/FileUpload";
-// import ProgressIndicator from "./ProgressIndicator";
-// import { addFolder } from "@/API/Firestore";
-// import { useRouter } from "next/router";
+import { useFileContext } from "../context/FileContext";
+import { ADDFILE, CREATEFOLDER } from "../redux/file_system/file_action";
 
-function SideMenu() {
+function SideMenu({ folderPath }) {
   const [isDropDown, setIsDropDown] = useState(false);
-  // TODO: change uploadStatus to progress
-  // const [uploadStatus, setUploadStatus] = useState([]);
-  const [fileName, setFileName] = useState();
   const [folderName, setFolderName] = useState("");
   const [folderToggle, setFolderToggle] = useState(false);
+  const { file, fileDispatch } = useFileContext();
+  const directoryPath = folderPath ? `/${folderPath.join("/")}` : "/";
 
   // Add new file
   const uploadFile = (e) => {
@@ -29,11 +24,36 @@ function SideMenu() {
       reader.onload = function (event) {
         const fileContent = event.target.result;
         if (file.type.startsWith("image/")) {
-          setFileName(fileContent);
+          fileDispatch({
+            type: ADDFILE,
+            payload: {
+              path: directoryPath,
+              name: file.name,
+              fileLink: fileContent,
+              fileExtension: file.type.split("/")[1],
+            },
+          });
         } else if (file.type.startsWith("video/")) {
-          setFileName(URL.createObjectURL(file));
+          fileDispatch({
+            type: ADDFILE,
+            payload: {
+              path: directoryPath,
+              name: file.name,
+              fileLink: URL.createObjectURL(file),
+              fileExtension: "mp4",
+            },
+          });
         } else if (file.type.startsWith("audio/")) {
-          setFileName(URL.createObjectURL(file));
+          console.log(file);
+          fileDispatch({
+            type: ADDFILE,
+            payload: {
+              path: directoryPath,
+              name: file.name,
+              fileLink: URL.createObjectURL(file),
+              fileExtension: "mp3",
+            },
+          });
         }
       };
       if (file.type.startsWith("image/")) {
@@ -45,13 +65,15 @@ function SideMenu() {
   };
 
   // Add new folder
-  const uploadFolder = () => {};
+  const uploadFolder = () => {
+    fileDispatch({
+      type: CREATEFOLDER,
+      payload: { path: directoryPath, name: folderName },
+    });
+  };
 
   return (
     <section className="relative h-[90vh] w-16 space-y-4 duration-500 tablet:w-60">
-      <img src={fileName} alt="" />
-      <video src={fileName} controls={true}></video>
-      <audio src={fileName} controls={true}></audio>
       <button
         onClick={() => setIsDropDown(true)}
         className="mt-1 flex w-fit items-center justify-center space-x-2

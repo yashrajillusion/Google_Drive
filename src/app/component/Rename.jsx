@@ -1,17 +1,25 @@
 import React, { useState } from "react";
+import { useFileContext } from "../context/FileContext";
+import { RENAMEFILE, RENAMEFOLDER } from "../redux/file_system/file_action";
 
 // The Rename component displays a pop-up for rename input.
-function Rename({
-  setRenameToggle,
-  fileId,
-  fileName,
-  isFolder,
-  fileExtension,
-}) {
+function Rename({ setRenameToggle, fileName, isFolder }) {
   const [newName, setNewName] = useState(fileName);
+  const { file, fileDispatch } = useFileContext();
 
   const rename = () => {
     if (newName === "") return;
+    if (isFolder) {
+      fileDispatch({
+        type: RENAMEFOLDER,
+        payload: { path: "/", name: fileName, rename: newName },
+      });
+    } else {
+      fileDispatch({
+        type: RENAMEFILE,
+        payload: { path: "/", name: fileName, rename: newName },
+      });
+    }
     setRenameToggle("");
   };
 
