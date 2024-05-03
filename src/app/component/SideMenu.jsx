@@ -7,7 +7,6 @@ import AddFolder from "./button/AddFolder";
 import { useFileContext } from "../context/FileContext";
 import { ADDFILE, CREATEFOLDER } from "../redux/file_system/file_action";
 import { usePathname } from "next/navigation";
-import path from "path";
 
 function SideMenu() {
   const [isDropDown, setIsDropDown] = useState(false);

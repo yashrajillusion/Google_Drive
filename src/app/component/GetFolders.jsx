@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillFolder } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -21,6 +21,10 @@ function GetFolders({ folderPath }) {
 
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (!currentFolder) router.push("/drive/my-drive");
+  }, [currentFolder]);
 
   const handleMenuToggle = (fileId) => {
     // Toggle the dropdown for the given file

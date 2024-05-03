@@ -65,7 +65,6 @@ function GetFiles({ folderPath, select }) {
     return (
       <div
         key={file.id}
-        // onDoubleClick={() => openFile(file.fileLink)}
         className="hover:cursor-alias"
       >
         <div

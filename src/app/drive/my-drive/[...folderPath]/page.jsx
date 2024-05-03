@@ -1,6 +1,5 @@
 "use client";
 import GetFolders from "../../../component/GetFolders";
-import Header from "../../../component/header/Header";
 import MyDriveHeader from "../../../component/mydrive_header";
 import GetFiles from "../../../component/GetFiles";
 
@@ -27,16 +26,4 @@ export default function Folder({ params }) {
       </div>
     </div>
   );
-}
-{
-  /* <>
-  <main className="flex h-screen flex-col items-center justify-between overflow-hidden bg-bgc">
-    <Header />
-    <section className="mb-5 flex h-full w-screen flex-1 px-5 pr-16">
-      <div>
-        <SideMenu folderPath={params.folderPath} />
-      </div>
-    </section>
-  </main>
-</>; */
 }

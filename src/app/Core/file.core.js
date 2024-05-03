@@ -104,18 +104,3 @@ export class CoreFileSystem {
     return this.folderLookup.get(folderAddress);
   }
 }
-// fileSystem.createFolder("/", "document");
-// fileSystem.createFolder("/document", "yash");
-// fileSystem.addFile("/", "raj");
-// fileSystem.addFile("/document", "shyam");
-// console.log(fileSystem)
-// console.log("-----------------------------------------------------");
-// console.log(fileSystem.getFolder("/document"))
-// console.log(fileSystem)
-// fileSystem.deleteFile("/document", "yash")
-// fileSystem.deleteFile("/document", "yash")
-// console.log(fileSystem.getFolder("/document"))
-
-// fileSystem.renameFolder("/","document", "xDocument" )
-// fileSystem.renameFile("/document", "shyam", "xshyam")
-// console.log(fileSystem.getFolder("/document"))
