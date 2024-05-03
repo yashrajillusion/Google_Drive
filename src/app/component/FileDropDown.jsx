@@ -1,13 +1,7 @@
 import React from "react";
 import { HiOutlineArrowsExpand } from "react-icons/hi";
-import {
-  MdDriveFileRenameOutline,
-  MdOutlineRestore,
-  MdStarBorder,
-  MdStarRate,
-} from "react-icons/md";
+import { MdDriveFileRenameOutline } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { TbDownload } from "react-icons/tb";
 
 function FileDropDown({
   file,
@@ -15,6 +9,7 @@ function FileDropDown({
   isFolderComp,
   folderId,
   setRenameToggle,
+  handleDelete,
 }) {
   const openFile = (fileLink) => {
     // Open the file in a new tab
@@ -30,17 +25,6 @@ function FileDropDown({
         <HiOutlineArrowsExpand className="h-5 w-5" />
         <span className="text-sm">Open File</span>
       </div>
-      {!isFolderComp && (
-        <a
-          href={file.fileLink}
-          download={file.fileName}
-          className="my-2 flex items-center space-x-3 px-3 py-1.5 hover:cursor-pointer hover:bg-[#ddd]"
-        >
-          <TbDownload className="h-5 w-5" />
-          <span className="text-sm">Download</span>
-        </a>
-      )}
-
       <div
         onClick={() => setRenameToggle(file.id)}
         className="my-2 flex items-center space-x-3 px-3 py-1.5 hover:cursor-pointer hover:bg-[#ddd]"
@@ -48,15 +32,12 @@ function FileDropDown({
         <MdDriveFileRenameOutline className="h-5 w-5" />
         <span className="text-sm">Rename</span>
       </div>
-      <div className="my-2 flex items-center space-x-3 px-3 py-1.5 hover:cursor-pointer hover:bg-[#ddd]">
-        {!file.isStarred ? (
-          <MdStarBorder className="h-5 w-5" />
-        ) : (
-          <MdStarRate className="h-5 w-5" />
-        )}
-        <span className="text-sm">Add to starred</span>
-      </div>
-      <div className="my-2 flex items-center space-x-3 px-3 py-1.5 hover:cursor-pointer hover:bg-[#ddd]">
+      <div
+        onClick={() => {
+          handleDelete(file.name);
+        }}
+        className="my-2 flex items-center space-x-3 px-3 py-1.5 hover:cursor-pointer hover:bg-[#ddd]"
+      >
         <RiDeleteBin6Line className="h-5 w-5" />
         <span className="text-sm">Move to bin</span>
       </div>

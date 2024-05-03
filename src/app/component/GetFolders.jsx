@@ -7,6 +7,7 @@ import FileDropDown from "./FileDropDown";
 import Rename from "./Rename";
 import { useFileContext } from "../context/FileContext";
 import { useRouter, usePathname } from "next/navigation";
+import { DELETEFOLDER } from "../redux/file_system/file_action";
 
 function GetFolders({ folderPath }) {
   const { file, fileDispatch } = useFileContext();
@@ -25,6 +26,13 @@ function GetFolders({ folderPath }) {
     // Toggle the dropdown for the given file
     setRenameToggle("");
     setOpenMenu((prevOpenMenu) => (prevOpenMenu === fileId ? "" : fileId));
+  };
+
+  const handleDelete = (name) => {
+    fileDispatch({
+      type: DELETEFOLDER,
+      payload: { path: directoryPath, name: name },
+    });
   };
 
   const folders = fileList.map((folder) => {
@@ -54,11 +62,12 @@ function GetFolders({ folderPath }) {
               /* drop down */
               openMenu === folder.id && (
                 <FileDropDown
-                  file={folder.id}
+                  file={folder}
                   setOpenMenu={setOpenMenu}
                   isFolderComp={true}
                   folderId={folder.id}
                   setRenameToggle={setRenameToggle}
+                  handleDelete={handleDelete}
                 />
               )
             }

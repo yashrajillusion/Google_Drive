@@ -5,6 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import FileDropDown from "./FileDropDown";
 import Rename from "./Rename";
 import { useFileContext } from "../context/FileContext";
+import { DELETEFILE, DELETEFOLDER } from "../redux/file_system/file_action";
 
 function GetFiles({ folderPath, select }) {
   const [openMenu, setOpenMenu] = useState("");
@@ -19,6 +20,12 @@ function GetFiles({ folderPath, select }) {
     // Toggle the dropdown for the given file
     setRenameToggle("");
     setOpenMenu((prevOpenMenu) => (prevOpenMenu === fileId ? "" : fileId));
+  };
+  const handleDelete = (name) => {
+    fileDispatch({
+      type: DELETEFILE,
+      payload: { path: directoryPath, name: name },
+    });
   };
 
   const list = fileList.map((file) => {
@@ -86,6 +93,7 @@ function GetFiles({ folderPath, select }) {
                   select={select}
                   folderId={file.id}
                   setRenameToggle={setRenameToggle}
+                  handleDelete={handleDelete}
                 />
               )
             }
