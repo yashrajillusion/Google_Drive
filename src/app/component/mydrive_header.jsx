@@ -1,16 +1,30 @@
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import { AiFillCaretDown } from "react-icons/ai";
+import { AiFillCaretDown, AiOutlineArrowRight } from "react-icons/ai";
 
 function MyDriveHeader({ headerName }) {
   const pathName = usePathname();
+  const router = useRouter();
 
-  // console.log(pathName)
+  const pathList = pathName.split("/");
+  const dir = pathList.slice(2, pathList.length);
+  console.log(dir);
 
   return (
     <div className="flex flex-col space-y-6 p-5 pb-2">
       <div className="flex items-center space-x-2 text-2xl text-textC">
-        <h2>{headerName}</h2>
+        {dir.map((el, i) => (
+          <>
+            <h2
+              onClick={() => {
+                router.replace(`/drive/${pathList.slice(2, 3 + i).join("/")}`);
+              }}
+            >
+              {el}
+            </h2>
+            {i != dir.length - 1 && <AiOutlineArrowRight />}
+          </>
+        ))}
       </div>
       <div className="flex flex-wrap items-center gap-2">
         <button className="flex items-center space-x-2 rounded-lg border border-textC px-4 py-1 text-sm font-medium">
