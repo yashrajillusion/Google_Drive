@@ -1,7 +1,12 @@
+import { usePathname } from "next/navigation";
 import React from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 
 function MyDriveHeader({ headerName }) {
+  const pathName = usePathname();
+
+  // console.log(pathName)
+
   return (
     <div className="flex flex-col space-y-6 p-5 pb-2">
       <div className="flex items-center space-x-2 text-2xl text-textC">

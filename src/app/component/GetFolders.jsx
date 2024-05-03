@@ -46,7 +46,7 @@ function GetFolders({ folderPath }) {
             onDoubleClick={() => {
               router.push(pathname + "/" + folder.name);
             }}
-            className="relative flex w-[13.75rem] cursor-alias items-center justify-between rounded-xl bg-darkC2 p-3 hover:bg-darkC"
+            className="relative flex w-[13.75rem] items-center justify-between rounded-xl bg-darkC2 p-3 hover:bg-darkC"
           >
             <div className="flex items-center space-x-2">
               <AiFillFolder className="h-6 w-6" />

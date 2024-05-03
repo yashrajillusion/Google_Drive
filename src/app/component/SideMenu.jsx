@@ -6,13 +6,18 @@ import DropDown from "./button/DropDown";
 import AddFolder from "./button/AddFolder";
 import { useFileContext } from "../context/FileContext";
 import { ADDFILE, CREATEFOLDER } from "../redux/file_system/file_action";
+import { usePathname } from "next/navigation";
+import path from "path";
 
-function SideMenu({ folderPath }) {
+function SideMenu() {
   const [isDropDown, setIsDropDown] = useState(false);
   const [folderName, setFolderName] = useState("");
   const [folderToggle, setFolderToggle] = useState(false);
   const { file, fileDispatch } = useFileContext();
-  const directoryPath = folderPath ? `/${folderPath.join("/")}` : "/";
+  const pathName = usePathname();
+  const pathList = pathName.split("/");
+  const dir = pathList.slice(3, pathList.length);
+  const directoryPath = dir.length === 0 ? "/" : `/${dir.join("/")}`;
 
   // Add new file
   const uploadFile = (e) => {

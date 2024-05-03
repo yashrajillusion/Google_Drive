@@ -1,58 +1,49 @@
-import Link from "next/link";
-import React from "react";
-import { useRouter } from "next/router";
-import { DiGoogleDrive } from "react-icons/di";
-import { MdStarBorder } from "react-icons/md";
-import { RiDeleteBin6Fill, RiDeleteBin6Line } from "react-icons/ri";
-import { IoMdStar } from "react-icons/io";
+"use client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { AiFillCaretDown, AiFillFolder } from "react-icons/ai";
+import { useFileContext } from "../context/FileContext";
 
 function Navbar() {
-  // const router = useRouter();
-
   // Function to check if a link is active based on the current route.
-  const isActive = (href) => "/drive/my-drive" === href;
-  return (
-    <nav className="space-y-0.5 pr-5">
-      <Link
-        href={"/drive/my-drive"}
-        className={`tablet:justify-normal tablet:space-x-3 tablet:px-4 tablet:py-1.5 flex items-center justify-center rounded-full p-2 hover:bg-darkC ${
-          isActive("/drive/my-drive") ? "bg-[#C2E7FF]" : ""
-        }`}
-      >
-        {isActive("/drive/my-drive") ? (
-          <DiGoogleDrive className="tablet:h-5 tablet:w-5 h-6 w-6 rounded-sm border-[2.3px] border-textC bg-textC text-white" />
-        ) : (
-          <DiGoogleDrive className="tablet:h-5 tablet:w-5 h-6 w-6 rounded-sm border-[2.3px] border-textC" />
-        )}
-        <span className="tablet:block hidden">My Drive</span>
-      </Link>
-      <Link
-        href={"/drive/starred"}
-        className={`tablet:justify-normal tablet:space-x-3 tablet:px-4 tablet:py-1.5 flex items-center justify-center rounded-full p-2 hover:bg-darkC ${
-          isActive("/drive/starred") ? "bg-[#C2E7FF]" : ""
-        }`}
-      >
-        {isActive("/drive/starred") ? (
-          <IoMdStar className="tablet:h-5 tablet:w-5 h-6 w-6" />
-        ) : (
-          <MdStarBorder className="tablet:h-5 tablet:w-5 h-6 w-6" />
-        )}
+  const { file, fileDispatch } = useFileContext();
+  const folderTree = file.fileSystem.getFolder("/");
 
-        <span className="tablet:block hidden">Starred</span>
-      </Link>
-      <Link
-        href={"/drive/trash"}
-        className={`tablet:justify-normal tablet:space-x-3 tablet:px-4 tablet:py-1.5 flex items-center justify-center rounded-full p-2 hover:bg-darkC ${
-          isActive("/drive/trash") ? "bg-[#C2E7FF]" : ""
-        }`}
+  return (
+    <FolderNavbarComp folderTree={folderTree} pathname={"/drive/my-drive"} />
+  );
+}
+
+function FolderNavbarComp({ folderTree, pathname }) {
+  if (!folderTree || !folderTree.isFolder) return;
+  const fileList = [...folderTree.children.values()];
+  const [isExpand, setExpand] = useState(false);
+  const router = useRouter();
+
+  return (
+    <nav className="space-y-0.5  pr-2 ml-3">
+      <div
+        onClick={() => {
+          router.replace(pathname);
+        }}
+        className={`tablet:justify-normal tablet:space-x-3 tablet:px-4 tablet:py-1.5 flex items-center justify-center rounded-full p-2 hover:bg-darkC`}
       >
-        {isActive("/drive/trash") ? (
-          <RiDeleteBin6Fill className="tablet:h-5 tablet:w-5 h-6 w-6" />
-        ) : (
-          <RiDeleteBin6Line className="tablet:h-5 tablet:w-5 h-6 w-6" />
-        )}
-        <span className="tablet:block hidden">Bin</span>
-      </Link>
+        <AiFillCaretDown
+          onClick={() => setExpand((prev) => !prev)}
+          className={`h-3 w-3 shrink-0 rotate-${isExpand ? "" : "[270deg]"}`}
+        />
+        <AiFillFolder className="h-4 shrink-0 w-4" />
+        <span className="tablet:block hidden">{folderTree.name}</span>
+      </div>
+      <div className={`${isExpand ? "block" : "hidden"}`}>
+        {fileList.map((el) => (
+          <FolderNavbarComp
+            key={el.id}
+            folderTree={el}
+            pathname={`${pathname}/${el.name}`}
+          />
+        ))}
+      </div>
     </nav>
   );
 }
