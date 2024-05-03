@@ -14,7 +14,7 @@ function GetFiles({ folderPath, select }) {
   const directoryPath = folderPath ? `/${folderPath.join("/")}` : "/";
   const currentFolder = file.fileSystem.getFolder(directoryPath);
 
-  const fileList = [...currentFolder.children.values()];
+  const fileList = currentFolder ? [...currentFolder.children.values()] : [];
 
   const handleMenuToggle = (fileId) => {
     // Toggle the dropdown for the given file

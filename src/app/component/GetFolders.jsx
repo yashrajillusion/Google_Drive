@@ -14,7 +14,7 @@ function GetFolders({ folderPath }) {
   const directoryPath = folderPath ? `/${folderPath?.join("/")}` : "/";
   const currentFolder = file.fileSystem.getFolder(directoryPath);
 
-  const fileList = [...currentFolder.children.values()];
+  const fileList = [...(currentFolder?.children.values() ?? [])];
 
   const [openMenu, setOpenMenu] = useState("");
   const [renameToggle, setRenameToggle] = useState("");

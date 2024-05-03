@@ -1,14 +1,11 @@
 "use client";
 import { useEffect } from "react";
 import GetFolders from "../../component/GetFolders";
-import Header from "../../component/header/Header";
 import MyDriveHeader from "../../component/mydrive_header";
 import { useFileContext } from "../../context/FileContext";
 import {
   ADDFILE,
   CREATEFOLDER,
-  DELETEFILE,
-  DELETEFOLDER,
   RENAMEFILE,
   RENAMEFOLDER,
 } from "../../redux/file_system/file_action";
@@ -16,6 +13,8 @@ import GetFiles from "../../component/GetFiles";
 
 export default function Home() {
   const { file, fileDispatch } = useFileContext();
+
+  // IGONORE: For Initial Folder/Files Creation
   useEffect(() => {
     fileDispatch({
       type: CREATEFOLDER,
@@ -31,7 +30,7 @@ export default function Home() {
     });
     fileDispatch({
       type: ADDFILE,
-      payload: { path: "/", name: "a" },
+      payload: { path: "/", name: "a", fileExtension: "png" },
     });
     fileDispatch({
       type: ADDFILE,
@@ -45,18 +44,6 @@ export default function Home() {
       type: ADDFILE,
       payload: { path: "/document/unit-1", name: "x2" },
     });
-    // fileDispatch({
-    //   type: DELETEFOLDER,
-    //   payload: { path: "/", name: "evaluation" },
-    // });
-    // fileDispatch({
-    //   type: DELETEFOLDER,
-    //   payload: { path: "/document", name: "unit-1" },
-    // });
-    // fileDispatch({
-    //   type: DELETEFILE,
-    //   payload: { path: "/document/unit-1", name: "x2" },
-    // });
     fileDispatch({
       type: RENAMEFILE,
       payload: { path: "/document/unit-1", name: "x2", rename: "y2" },
@@ -66,7 +53,6 @@ export default function Home() {
       payload: { path: "/document", name: "unit-1", rename: "unit-x" },
     });
   }, []);
-  // console.log("file", file);
 
   return (
     <>

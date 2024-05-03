@@ -3,7 +3,6 @@ import {
   CREATEFOLDER,
   DELETEFILE,
   DELETEFOLDER,
-  GETFOLDER,
   RENAMEFILE,
   RENAMEFOLDER,
 } from "./file_action";

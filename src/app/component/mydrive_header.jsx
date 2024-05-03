@@ -15,7 +15,8 @@ function MyDriveHeader({ headerName }) {
       <div className="flex items-center space-x-2 text-2xl text-textC">
         {dir.map((el, i) => (
           <>
-            <h2
+            <h2 
+            className="cursor-pointer"
               onClick={() => {
                 router.replace(`/drive/${pathList.slice(2, 3 + i).join("/")}`);
               }}
