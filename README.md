@@ -1,7 +1,10 @@
 
 # LYNC | Drive 
 
-This is clone project based on google drive where i am showcasing handling of file system using memory.
+
+Usage Guide: This is mostly same like google drvie you will get upload file/folder button in left nav bar
+
+<img width="1440" alt="image" src="https://github.com/yashrajillusion/Google_Drive/assets/95868808/a793dd52-a254-42a0-abac-e2131fb3e143">
 
 
 
@@ -19,13 +22,6 @@ This is clone project based on google drive where i am showcasing handling of fi
 ```
 
 
-## Features
-
-Usage Guide: This is mostly same like google drvie you will get upload file/folder button in left nav bar
-
-You will get 
-Left Navbar for folder navigation
-Breadcrumbs on center top
 ## Dependencies
 
 "nanoid": "^5.0.7" - For generating unique id for filesystem,
